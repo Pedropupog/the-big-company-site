@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#05070d" />
+  <title>The Big Company LTDA — Soluções de TI</title>
+  <meta name="description" content="Consultoria em TI, Cloud, Cibersegurança e Suporte gerenciado para PMEs."/>
+  <style>
+    :root{
+      --bg:#05070d;
+      --card:rgba(15,20,35,.88);
+      --text:#e6edf7;
+      --muted:#aab4c8;
+      --brand:#4f7cff;
+      --brand-2:#09d6b7;
+      --radius:20px;
+      --shadow:0 10px 35px rgba(0,0,0,.55);
+      --header-h:64px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg) url('fundo.avif') no-repeat center center fixed;
+      background-size: cover;
+      color:var(--text);
+      line-height:1.6;
+      letter-spacing:.3px;
+      min-height:100dvh;
+    }
+    @media (max-width: 900px){ body{ background-attachment: scroll; } }
+    header{
+      background:rgba(5,7,13,.7);
+      backdrop-filter: blur(6px);
+      position:sticky;top:0;z-index:1000;
+      border-bottom:1px solid rgba(255,255,255,.1)
+    }
+    .container{max-width:1150px;margin:0 auto;padding:0 20px}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0; min-height:var(--header-h);}
+    .logo{font-weight:700;font-size:20px;color:var(--brand)}
+    .menu{display:flex;gap:22px;align-items:center}
+    .menu a{color:var(--text);opacity:.9;text-decoration:none;transition:.2s; padding:10px 6px; border-radius:10px}
+    .menu a:hover,.menu a:focus-visible{opacity:1;color:var(--brand-2); outline:none}
+    .menu-toggle{display:none; width:42px; height:42px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:var(--text)}
+    .menu-toggle span{display:block; width:22px; height:2px; background:var(--text); margin:5px auto; border-radius:2px}
+    @media (max-width: 840px){
+      .menu{position:fixed; inset:var(--header-h) 0 0 0; display:none; flex-direction:column; padding:18px; gap:12px; background:rgba(5,7,13,.96); backdrop-filter: blur(8px)}
+      .menu.open{display:flex}
+      .menu a{font-size:18px; padding:12px}
+      .menu-toggle{display:inline-grid; place-items:center}
+    }
+    .btn{display:inline-block;padding:12px 18px;border-radius:var(--radius);text-decoration:none;transition:.3s;font-weight:600}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#05070d}
+    .btn.primary:hover{transform:translateY(-2px)}
+    .hero{padding:90px 0;text-align:center;background:rgba(5,7,13,.65)}
+    .hero h1{font-size:46px;line-height:1.15;margin-bottom:16px;background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero p{max-width:680px;margin:0 auto 24px;color:var(--muted);font-size:18px}
+    section{padding:70px 0;background:rgba(5,7,13,.75)}
+    section[id]{scroll-margin-top: calc(var(--header-h) + 12px);}
+    .section-head{text-align:center;margin-bottom:32px}
+    .section-head h2{font-size:28px;margin-bottom:8px}
+    .grid{display:grid;gap:20px}
+    .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .card{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:.3s}
+    .card:hover{transform:translateY(-4px);}
+    .card h3{margin:12px 0;font-size:20px}
+    .card p{color:var(--muted)}
+    .steps .step{display:flex;gap:14px;margin-bottom:20px}
+    .steps .num{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#05070d;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-weight:800}
+    form input,form textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:var(--text);margin-top:6px}
+    form input:focus-visible,form textarea:focus-visible{outline:2px solid var(--brand-2); border-color: transparent}
+    label{font-size:14px; color:var(--text)}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+    .toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#05070d; padding:12px 16px; border-radius:12px; box-shadow:var(--shadow); display:none; z-index:2000}
+    .toast.show{display:block}
+    form button{margin-top:10px}
+    footer{padding:30px 0;text-align:center;color:var(--muted);background:rgba(5,7,13,.8);border-top:1px solid rgba(255,255,255,.1)}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#conteudo" class="sr-only">Pular para o conteúdo</a>
+    <div class="container nav">
+      <div class="logo" aria-label="Início">The Big Company LTDA</div>
+      <button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="primary-nav" class="menu" role="navigation">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#quemsomos">Quem somos</a>
+        <a href="#processo">Processo</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="conteudo" class="hero">
+    <div class="container">
+      <h1>Soluções de TI</h1>
+      <p>Transformamos empresas com Cloud, Segurança e Suporte inovadores. Nosso site é inspirado no futuro da tecnologia para transmitir confiança e modernidade.</p>
+      <a href="#contato" class="btn primary">Solicitar Diagnóstico</a>
+    </div>
+  </section>
+
+  <!-- SOBRE (Definição + Público-alvo) -->
+  <section id="sobre">
+    <div class="container">
+      <div class="section-head">
+        <h2>Sobre a The Big Company LTDA</h2>
+      </div>
+      <div class="grid cols-3" style="grid-template-columns:1fr 1fr; gap:20px">
+        <div class="card">
+          <h3>Definição do Produto/Serviço</h3>
+          <p>A The Big Company LTDA oferece serviços especializados em suporte de TI, garantindo que empresas e usuários individuais possam manter seus sistemas tecnológicos funcionando com segurança, eficiência e estabilidade. Entre os serviços prestados estão: manutenção preventiva e corretiva de computadores, instalação e configuração de softwares, suporte remoto e presencial, consultoria em segurança da informação e gestão de redes.</p>
+        </div>
+        <div class="card">
+          <h3>Público-Alvo</h3>
+          <p>Nosso público-alvo são pequenas e médias empresas que dependem da tecnologia para suas operações diárias, mas que não possuem uma equipe interna de TI estruturada. Além disso, atendemos também profissionais autônomos e usuários domésticos que necessitam de auxílio técnico acessível e confiável para resolver problemas em seus equipamentos e sistemas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos">
+    <div class="container">
+      <div class="section-head">
+        <h2>Nossos Serviços</h2>
+        <span class="badge">Tabela simplificada de serviços e valores</span>
+      </div>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Formatação e Otimização de PCs</h3>
+          <p>Backup, reinstalação do sistema operacional, drivers e programas básicos.</p>
+          <p><b>Valor:</b> R$150,00</p>
+        </div>
+        <div class="card">
+          <h3>Suporte Remoto</h3>
+          <p>Atendimento online para resolver problemas de software ou configuração.</p>
+          <p><b>Valor:</b> R$80,00 / hora</p>
+        </div>
+        <div class="card">
+          <h3>Manutenção Preventiva</h3>
+          <p>Limpeza física, atualização de softwares e antivírus, checagem de rede.</p>
+          <p><b>Valor:</b> R$120,00</p>
+        </div>
+        <div class="card">
+          <h3>Configuração de Rede (LAN/Wi-Fi)</h3>
+          <p>Instalação e configuração de roteadores, switches e rede sem fio.</p>
+          <p><b>Valor:</b> R$200,00</p>
+        </div>
+        <div class="card">
+          <h3>Instalação de Softwares Especializados</h3>
+          <p>Instalação e configuração de sistemas específicos (ERP, AutoCAD, etc.).</p>
+          <p><b>Valor:</b> R$100,00 cada</p>
+        </div>
+        <div class="card">
+          <h3>Consultoria em Segurança Digital</h3>
+          <p>Avaliação de vulnerabilidades, firewall e backup em nuvem.</p>
+          <p><b>Valor:</b> R$250,00</p>
+        </div>
+        <div class="card">
+          <h3>Contrato Mensal de Suporte Empresarial</h3>
+          <p>Pacote com suporte remoto + 2 visitas presenciais por mês.</p>
+          <p><b>Valor:</b> a partir de R$600,00</p>
+        </div>
+      </div>
+
+      <div class="cta" style="margin-top:20px">
+        <a class="btn primary" href="#contato">Solicitar orçamento</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="quemsomos">
+    <div class="container">
+      <div class="section-head"><h2>Quem somos</h2></div>
+      <div class="grid cols-3">
+        <div class="card"><h3>Especialistas em PMEs</h3><p>Processos simples e foco no que gera resultado para sua operação.</p></div>
+        <div class="card"><h3>Segurança em primeiro lugar</h3><p>Práticas alinhadas à LGPD e aos principais frameworks.</p></div>
+        <div class="card"><h3>Time próximo</h3><p>Atendimento humano, com SLA claro e comunicação transparente.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="processo">
+    <div class="container">
+      <div class="section-head"><h2>Nosso Processo</h2></div>
+      <div class="card steps" role="list">
+        <div class="step" role="listitem"><div class="num" aria-hidden="true">1</div><div><h3>Diagnóstico</h3><p>Análise completa do ambiente de TI.</p></div></div>
+        <div class="step" role="listitem"><div class="num" aria-hidden="true">2</div><div><h3>Planejamento</h3><p>Plano sob medida com foco no futuro.</p></div></div>
+        <div class="step" role="listitem"><div class="num" aria-hidden="true">3</div><div><h3>Implementação</h3><p>Soluções aplicadas com inovação.</p></div></div>
+        <div class="step" role="listitem"><div class="num" aria-hidden="true">4</div><div><h3>Suporte Contínuo</h3><p>Monitoramento e ajustes constantes.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="container">
+      <div class="section-head"><h2>Contato</h2></div>
+      <form class="card" onsubmit="event.preventDefault(); alert('Mensagem enviada! (demo)'); this.reset();">
+        <label>Nome<input required placeholder="Seu nome"></label>
+        <label>E-mail<input type="email" required placeholder="seuemail@exemplo.com"></label>
+        <label>Mensagem<textarea rows="4" placeholder="Digite sua mensagem"></textarea></label>
+        <button type="submit" class="btn primary">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© 2025 The Big Company LTDA • Soluções de TI</div>
+  </footer>
+
+  <script>
+  // menu mobile acessível
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.getElementById('primary-nav');
+  toggle.addEventListener('click', ()=>{
+    const open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  // fechar menu ao navegar
+  menu.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      if(menu.classList.contains('open')){
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+      }
+    });
+  });
+  </script>
+</body>
+</html>
