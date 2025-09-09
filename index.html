@@ -30,8 +30,7 @@
       min-height:100dvh;
       background:#05070d center center no-repeat fixed;
       background-size:cover;
-      /* mantenha fundo.avif na mesma pasta do index.html */
-      background-image: image-set("fundo.avif" type("image/avif"));
+      background-image: image-set("fundo.avif" type("image/avif"), "fundo.jpg" type("image/jpeg"));
     }
     @media (max-width: 900px){ body{ background-attachment: scroll; } }
 
@@ -48,19 +47,12 @@
     .menu-toggle{display:none; width:44px; height:44px; border-radius:12px;border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); color:var(--text)}
     .menu-toggle span{display:block; width:22px; height:2px; background:var(--text); margin:5px auto; border-radius:2px}
 
-    /* MENU MOBILE OPACO (mesmo tom do site) */
+    @media (max-width: 900px){
+      :root{ --header-h:72px; }
+    }
+
     @media (max-width: 840px){
-      .menu{
-        position:fixed; inset:var(--header-h) 0 0 0;
-        display:none; flex-direction:column; padding:18px; gap:10px;
-        background: var(--bg);           /* sem transparência */
-        backdrop-filter:none;
-        -webkit-backdrop-filter:none;    /* iOS */
-        overflow-y:auto;                 /* se tiver muitos links */
-        z-index:2000;
-        border-top:1px solid rgba(255,255,255,.08);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
-      }
+      .menu{position:fixed; inset:var(--header-h) 0 0 0; display:none; flex-direction:column; padding:18px; gap:8px; background:rgba(5,7,13,.96); backdrop-filter: blur(8px)}
       .menu.open{display:flex}
       .menu a{font-size:18px; padding:14px}
       .menu-toggle{display:inline-grid; place-items:center}
@@ -94,6 +86,8 @@
     .card:hover{transform:translateY(-4px);}
     .card h3{margin:10px 0 8px;font-size:20px}
     .card p{color:var(--muted)}
+
+    .badge{display:inline-block;background:rgba(255,255,255,.08);padding:6px 10px;border-radius:999px;color:#cfe2ff;font-size:12px;border:1px solid rgba(255,255,255,.12)}
 
     .steps .step{display:flex;gap:14px;margin-bottom:20px}
     .steps .num{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#05070d;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-weight:800}
@@ -157,7 +151,6 @@
     </div>
   </section>
 
-  <!-- SOBRE -->
   <section id="sobre">
     <div class="container">
       <div class="section-head"><h2>Sobre a The Big Company LTDA</h2></div>
@@ -174,7 +167,6 @@
     </div>
   </section>
 
-  <!-- SERVIÇOS -->
   <section id="servicos">
     <div class="container">
       <div class="section-head">
@@ -221,7 +213,6 @@
     </div>
   </section>
 
-  <!-- CAMPANHAS -->
   <section id="campanhas">
     <div class="container">
       <div class="section-head"><h2>Campanhas</h2></div>
@@ -264,7 +255,6 @@
     </div>
   </section>
 
-  <!-- QUEM SOMOS -->
   <section id="quemsomos">
     <div class="container">
       <div class="section-head"><h2>Quem somos</h2></div>
@@ -276,7 +266,6 @@
     </div>
   </section>
 
-  <!-- PROCESSO -->
   <section id="processo">
     <div class="container">
       <div class="section-head"><h2>Nosso Processo</h2></div>
@@ -289,7 +278,6 @@
     </div>
   </section>
 
-  <!-- CONTATO -->
   <section id="contato">
     <div class="container">
       <div class="section-head"><h2>Contato</h2></div>
@@ -312,17 +300,13 @@
   </section>
 
   <footer>
-    <div class="container">© <span id="y"></span> The Big Company LTDA • Soluções de TI</div>
+    <div class="container">© 2025 The Big Company LTDA • Soluções de TI</div>
   </footer>
 
-  <!-- Botão flutuante de WhatsApp -->
-  <a class="float-wa" href="https://wa.me/5511911873753?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20as%20campanhas%20e%20servi%C3%A7os%20de%20TI%20da%20The%20Big%20Company%20LTDA." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">WhatsApp</a>
+  <a class="float-wa" href="https://wa.me/5511911873753?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20as%20campanhas%20e%20servi%C3%A7os%20de%20TI%20da%20The%20Big%20Company%20LTDA." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">WhatsApp</a>
 
   <script>
-  // ano no rodapé
-  document.getElementById('y').textContent = new Date().getFullYear();
-
-  // Controle do menu mobile + bloqueio/retorno do scroll
+  // Controle do menu mobile
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.getElementById('primary-nav');
   toggle.addEventListener('click', function(){
@@ -331,7 +315,7 @@
     document.documentElement.style.overflow = isOpen ? 'hidden' : '';
   });
 
-  // Scroll programático com offset do header (funciona bem no iOS/Safari)
+  // Scroll programático com offset do header
   function scrollToHash(hash){
     const id = hash.replace('#','');
     const target = document.getElementById(id);
@@ -340,8 +324,6 @@
     const y = target.getBoundingClientRect().top + window.pageYOffset - (headerH + 12);
     window.scrollTo({top:y, behavior:'smooth'});
   }
-
-  // Intercepta cliques nas âncoras do menu para funcionar 100% no celular
   menu.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(ev){
       ev.preventDefault();
@@ -354,13 +336,9 @@
       scrollToHash(hash);
     });
   });
-
-  // Se abrir com hash direto na URL, aplica o offset
   if (window.location.hash){
     setTimeout(()=> scrollToHash(window.location.hash), 50);
   }
-
-  // Segurança extra em resize
   window.addEventListener('resize', function(){
     if (window.innerWidth > 840 && menu.classList.contains('open')) {
       menu.classList.remove('open');
